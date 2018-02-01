@@ -92,9 +92,9 @@
 (display (tirada-ganadora (cons 1 4) (cons 1 6)))
 
 ;; Pruebas
-;(check-eq? (tirada-ganadora (cons 1 3) (cons 1 6)) (cons 1 6))
-;(check-eq? (tirada-ganadora (cons 1 5) (cons 2 2)) (cons 1 5))
-;(check-eq? (tirada-ganadora (cons 6 2) (cons 3 3)) 0)
+(eq? (tirada-ganadora (cons 1 3) (cons 1 6)) (cons 1 6))
+(eq? (tirada-ganadora (cons 1 5) (cons 2 2)) (cons 1 5))
+(eq? (tirada-ganadora (cons 6 2) (cons 3 3)) 0)
 
 
 
@@ -125,23 +125,30 @@
 (display "\n\nActividad 4")
 (display "\n(tipo-triangulo (cons -2 3) (cons  2 6) (cons 5 3)) => ")
 (display (tipo-triangulo (cons -2 3) (cons  2 6) (cons 5 3)))
+
 ;; Pruebas
 (check-eq? (tipo-triangulo (cons 1 1) (cons 1 6) (cons 6 1)) "isosceles")
 (check-eq? (tipo-triangulo (cons -2 3) (cons 2 6) (cons 5 3)) "escaleno")
 (check-eq? (tipo-triangulo (cons -3 0) (cons 3 0) (cons 0 5.1961)) "equilatero")
 
 
+
 ;----------------------------------------------- Actividad 5
 
-(define (calculadora lista)
+(define (calculadora l)
   (cond
-    ((equal? (car lista) #\+) (+ (car(cdr lista)) (cdr(cdr lista)))) ))
-    ;((equal? (car lista) #\-) (- (car(cdr lista)) (cdr(cdr lista))))
-    ;((equal? (car lista) #\*) (* (car(cdr lista)) (cdr(cdr lista))))
-    ;((equal? (car lista) #\/) (/ (car(cdr lista)) (cdr(cdr lista))))))
+    ( (equal? (car l) #\+) (+ (car(cdr l)) (car(cddr l)) ))
+    ( (equal? (car l) #\*) (* (car(cdr l)) (car(cddr l)) ))
+    ( (equal? (car l) #\-) (- (car(cdr l)) (car(cddr l)) ))
+    ( (equal? (car l) #\/) (/ (car(cdr l)) (car(cddr l)) ))))
+
+;;Demostracion
+(display "\n\nActivdad 5")
+(display "\ncalculadora (list * 3 3) => ")
+(display (calculadora (list #\* 3 3)))
 
 ;;Pruebas
-;(check-eq? (calculadora (list #\+ 2 3)) 5)
-;(check-eq? (calculadora (list #\* 3 4)) 12)
-;(check-eq? (calculadora (list #\- 7 4)) 3)
-;(check-eq? (calculadora (list #\/ 6 3))  2)
+(check-eq? (calculadora (list #\+ 2 3)) 5)
+(check-eq? (calculadora (list #\* 3 4)) 12)
+(check-eq? (calculadora (list #\- 7 4)) 3)
+(check-eq? (calculadora (list #\/ 6 3))  2)
