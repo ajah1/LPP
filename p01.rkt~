@@ -132,16 +132,17 @@
 
 
 ;----------------------------------------------- Actividad 5
+(define (list #\+ 2 3) )
 
 (define (calculadora lista)
   (cond
-    ((equal? (car lista) #\+) (+ (car(cdr lista)) (cdr(cdr lista)))) ))
-    ;((equal? (car lista) #\-) (- (car(cdr lista)) (cdr(cdr lista))))
-    ;((equal? (car lista) #\*) (* (car(cdr lista)) (cdr(cdr lista))))
-    ;((equal? (car lista) #\/) (/ (car(cdr lista)) (cdr(cdr lista))))))
+    ((equal? (car lista) #\+) (+ (car(cdr lista)) (cdr(cdr lista))))
+    ((equal? (car lista) #\-) (- (car(cdr lista)) (cdr(cdr lista))))
+    ((equal? (car lista) #\*) (* (car(cdr lista)) (cdr(cdr lista))))
+    ((equal? (car lista) #\/) (/ (car(cdr lista)) (cdr(cdr lista))))))
 
 ;;Pruebas
-;(check-eq? (calculadora (list #\+ 2 3)) 5)
-;(check-eq? (calculadora (list #\* 3 4)) 12)
-;(check-eq? (calculadora (list #\- 7 4)) 3)
-;(check-eq? (calculadora (list #\/ 6 3))  2)
+(check-eq? (calculadora (list #\+ 2 3)) 5)
+(check-eq? (calculadora (list #\* 3 4)) 12)
+(check-eq? (calculadora (list #\- 7 4)) 3)
+(check-eq? (calculadora (list #\/ 6 3))  2)
