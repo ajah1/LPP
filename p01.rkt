@@ -42,7 +42,29 @@
 (check-eq?  (b-a-h 0 1 1 0)  6)
 (check-eq?  (b-a-h 1 0 1 0)  "A")
 
-;----------------------------------------------- Actividad 2
+
+;----------------------------------------------- Actividad 4
+
+; suma los valores que componen una pareja
+(define (suma-tirada tirada)
+  (+ (car tirada)
+     (cdr tirada)))
+
+(define (tirada-ganadora t1 t2)
+  (cond
+   ( (< (abs (- (suma-tirada t1) 7)) (abs (- (suma-tirada t2) 7)) ) 1)
+   ( (> (abs (- (suma-tirada t1) 7)) (abs (- (suma-tirada t2) 7)) ) 2)
+   ( else 0)))
+;; Demostracion
+(display "\n\nActividad 4")
+(display "\ntirada-ganadora (1 3) (1 6) => ")
+(display (tirada-ganadora (cons 1 3) (cons 1 6)))
+
+;; Pruebas
+(check-equal? (tirada-ganadora (cons 1 5) (cons 2 2)) 1)
+(check-equal? (tirada-ganadora (cons 6 2) (cons 3 3)) 0)
+
+;----------------------------------------------- Actividad 5
 
 ; devuelve la distancia entre dos puntos
 (define (distancia x1 y1 x2 y2)
@@ -62,7 +84,7 @@
           #f))
 
 ;;Demostracion
-(display "\n\nActividad 2")
+(display "\n\nActividad 5")
 (display "\ndentro-alcance? 0 0 500 500 30 => ")
 (display (dentro-alcance? 0 0 500 500 30))
 
@@ -72,34 +94,7 @@
 
 
 
-
-;----------------------------------------------- Actividad 3
-
-; suma los valores que componen una pareja
-(define (suma-tirada tirada)
-  (+ (car tirada)
-     (cdr tirada)))
-
-(define (tirada-ganadora t1 t2)
-  (cond
-   ( (> (suma-tirada t1) (suma-tirada t2)) t1 )
-   ( (< (suma-tirada t1) (suma-tirada t2)) t2 )
-   (else 0)))
-
-;; Demostracion
-(display "\n\nActividad 3")
-(display "\ntirada-ganadora (1 4) (1 6) => ")
-(display (tirada-ganadora (cons 1 4) (cons 1 6)))
-
-;; Pruebas
-(eq? (tirada-ganadora (cons 1 3) (cons 1 6)) (cons 1 6))
-(eq? (tirada-ganadora (cons 1 5) (cons 2 2)) (cons 1 5))
-(eq? (tirada-ganadora (cons 6 2) (cons 3 3)) 0)
-
-
-
-
-;----------------------------------------------- Actividad 4
+;----------------------------------------------- Actividad 6
 
 ; compara dos número naturales
 (define epsilon 0.0001)
@@ -122,7 +117,7 @@
 
 
 ;; Demostracion
-(display "\n\nActividad 4")
+(display "\n\nActividad 6")
 (display "\n(tipo-triangulo (cons -2 3) (cons  2 6) (cons 5 3)) => ")
 (display (tipo-triangulo (cons -2 3) (cons  2 6) (cons 5 3)))
 
@@ -133,7 +128,7 @@
 
 
 
-;----------------------------------------------- Actividad 5
+;----------------------------------------------- Actividad 7
 
 (define (calculadora l)
   (cond
@@ -143,7 +138,7 @@
     ( (equal? (car l) #\/) (/ (car(cdr l)) (car(cddr l)) ))))
 
 ;;Demostracion
-(display "\n\nActivdad 5")
+(display "\n\nActivdad 7")
 (display "\ncalculadora (list * 3 3) => ")
 (display (calculadora (list #\* 3 3)))
 

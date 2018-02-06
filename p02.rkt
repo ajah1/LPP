@@ -108,7 +108,7 @@
 (define (adyacentes-iguales? l)
   (cond
     ((null? (cdr l)) #f)
-    ((eq? (car l) (cadr l)) #t)
+    ((equal? (car l) (cadr l)) #t)
     (else (adyacentes-iguales? (cdr l)))))
 
 ;; Demostracion
@@ -118,3 +118,4 @@
 ;; Pruebas
 (check-equal? (adyacentes-iguales? '("esto" "es" "una" "lista" "de" "strings")) #f)
 (check-equal? (adyacentes-iguales? '(12 30 #t #\a 5 #f #f)) #t)
+(check-equal? (adyacentes-iguales? (list (cons 1 2) (cons 1 2) (cons 3 4))) #t)
