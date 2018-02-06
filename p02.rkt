@@ -96,5 +96,25 @@
     ((member? (car l) (cdr l)) #t)
     (else (repetidos? (cdr l)))))
 
-;----------------------------Actividad 5
+;; Demostracion
+(display "\n\nActividad 4")
+(display "\nrepetidos? '(1 2 3 5 4 5 6) => ")
+(display (repetidos? '(1 2 3 5 4 5 6)))
+;; Pruebas
+(check-eq? (repetidos? '(adios hola que tal)) #f)
+(check-eq? (repetidos? '(#t #f #t #t #t)) #t)
 
+;----------------------------Actividad 5
+(define (adyacentes-iguales? l)
+  (cond
+    ((null? (cdr l)) #f)
+    ((eq? (car l) (cadr l)) #t)
+    (else (adyacentes-iguales? (cdr l)))))
+
+;; Demostracion
+(display "\n\nActividad 5")
+(display "\nrepetidos? '(12 30 5  5 2) => ")
+(display (adyacentes-iguales? '(12 30 5  5 2)))
+;; Pruebas
+(check-equal? (adyacentes-iguales? '("esto" "es" "una" "lista" "de" "strings")) #f)
+(check-equal? (adyacentes-iguales? '(12 30 #t #\a 5 #f #f)) #t)
