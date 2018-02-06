@@ -83,8 +83,18 @@
 (check-eq?  (binario-a-decimal '(1 1 0)) 6)
 (check-eq?  (binario-a-decimal '(1 0)) 2)
 
+;----------------------------Actividad 4
+(define (member? elem l)
+  (cond
+    ((null? l) #f)
+    ((eq? (car l) elem) #t)
+    (else (member? elem (cdr l)))))
 
+(define (repetidos? l)
+  (cond
+    ((null? l) #f)
+    ((member? (car l) (cdr l)) #t)
+    (else (repetidos? (cdr l)))))
 
-
-
+;----------------------------Actividad 5
 
