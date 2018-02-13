@@ -80,6 +80,42 @@
 (check-eq?  (ordenada-creciente? '(3)) #t)
 
 
+;----------------------------Actividad 6
+;(A)
+(define (inc-izq p)
+  (cons (+ 1 (car p))
+        (cdr p)))
+
+(define (inc-der p)
+  (cons (car p)
+        (+ 1 (cdr p))))
+
+;(B)
+(define (cuenta-impares-pares l)
+  (cond
+    ((null? l) (cons 0 0))
+    ((odd? (car l)) (inc-izq (cuenta-impares-pares (cdr l))))
+    ((even?(car l)) (inc-der (cuenta-impares-pares (cdr l))))))
+
+
+;----------------------------Actividad 7
+(define (cadena-mayor l)
+  (cond
+    ((null? l) (cons "" 0))
+    ((> (string-length (car l)) (cdr (cadena-mayor (cdr l))))
+     (cons (car l) (string-length (car l))))
+    ((<= (string-length (car l)) (cdr (cadena-mayor (cdr l))))
+     (cadena-mayor (cdr l)))))
+  
+
+
+
+
+
+
+
+
+
 
 
 
