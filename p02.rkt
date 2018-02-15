@@ -3,6 +3,8 @@
         (rnrs io simple)
         (schemeunit))
 
+;; Aliaga Hyder Alejandro Jesús
+
 ;----------------------------Actividad 1
 (define (menor x y)
   (if (< x y) x y))
@@ -45,7 +47,37 @@
 (check-eq? (repetidos? '(adios hola que tal)) #f)
 (check-eq? (repetidos? '(#t #f #t #t #t)) #t)
 
+;----------------------------Actividad 3
+;(A)
+(define p1
+  (list (cons 1 2) 3))
 
+(define p2
+  (list '(a b)))
+
+(define p3
+  (cons 4 (cons p1 (cons p2 5))))
+
+;(B)
+; p1 => Es una lista, en el diagrama box and pointer se puede ver que
+;       el último elemento es '(). Tiene 2 elementos, el primero es una pareja
+;       y el segundo es un 3
+;
+; p2 =>  Ocurre lo mismo que en p1. Tiene un elemento que es a su vez una lista
+;
+; p3 => No es una lista, no acaba en '()
+
+;(C)
+(display "\n\nActividad 3")
+(display "\ndevuelve 3 utilizando p3 => (cdr (cadr p3)) = ")
+(display (car(cdr (cadr p3))))
+(display "\ndevuelve 5 utilizando p3 => (cdddr p3)) = ")
+(display (cdddr p3))
+
+;(D)
+(define p4 (list
+            (list (cons 1 2) (cons 3 4))
+            (list 5 6 (cons 7 (cons 8 9)))))
 ;----------------------------Actividad 4
 (define (binario-a-decimal l)
   (cond
@@ -97,6 +129,14 @@
     ((odd? (car l)) (inc-izq (cuenta-impares-pares (cdr l))))
     ((even?(car l)) (inc-der (cuenta-impares-pares (cdr l))))))
 
+;; Demostracion
+(display "\n\nActividad 6")
+(display "\ncuenta-impares-pares '(3 2 1 4 8 7 6 5) => ")
+(display (cuenta-impares-pares '(3 2 1 4 8 7 6 5)))
+
+;; Pruebas
+(check-equal? (cuenta-impares-pares '(3 1 5)) (cons 3 0))
+
 
 ;----------------------------Actividad 7
 (define (cadena-mayor l)
@@ -108,16 +148,11 @@
      (cadena-mayor (cdr l)))))
   
 
+;; Demostracion
+(display "\n\nActividad 7")
+(display "\ncuenta-mayor (vamos a obtener la cadena mayor) => ")
+(display (cadena-mayor '("vamos" "a" "obtener" "la" "cadena" "mayor")))
 
-
-
-
-
-
-
-
-
-
-
-
-
+;; Pruebas
+(check-equal? (cadena-mayor '("prueba" "con" "maximo" "igual")) (cons "maximo" 6))
+(check-equal? (cadena-mayor '()) (cons "" 0))
