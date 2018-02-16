@@ -54,12 +54,28 @@
 
 ;-------------------- Actividad 6
 
+(define (crea-persona nomb edad sexo)
+  (cons nomb (cons edad sexo)))
 
+(define (nomb p) (car p))
+(define (edad p) (cadr p))
+(define (sexo p) (cddr p))
 
+(define (edad-total people)
+  (cond
+    ((null? people) 0)
+    ((null? (cdr people)) (edad (car people)))
+    (else (+ (edad-total (car people))
+             (edad-total (cdr people))))))
 
+(define (edad-media personas)
+  (/ (edad-total personas) (string-length personas)))
 
-
-
+(define personas (list (crea-persona "Juan" 23 'hombre)
+                       (crea-persona "Ana" 18 'mujer)
+                       (crea-persona "Pablo" 30 'hombre)
+                       (crea-persona "Paula" 20 'mujer)
+                       (crea-persona "Antonio" 25 'hombre)))
 
 
 
