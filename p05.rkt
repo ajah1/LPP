@@ -3,7 +3,7 @@
         (schemeunit))
 
 ;;
-;;--------------------------------------------------------------------------------- Actividad 1
+;;--------------------------------------------------------------------------- Actividad 1
 ;; 
 
 ;;(A)
@@ -30,7 +30,7 @@
 
 
 ;;
-;;--------------------------------------------------------------------------------- Actividad 2
+;;---------------------------------------------------------------------- Actividad 2
 ;; 
 
 ;(expande-pareja (cons 'a 4)) ⇒ {a a a a}
@@ -55,37 +55,60 @@
 
 
 ;;
-;;--------------------------------------------------------------------------------- Actividad 3
+;;--------------------------------------------------------------------- Actividad 3
 ;; 
 
 ;(aplica-funciones (list (cons sqrt 16) (cons list 2) (cons even? 5) (cons not #f))) 
 ; ⇒ {4 {2} #f #t}
 
 (define (aplica-funciones lp)
-  (aplica-funciones-ite lp '()))
+  (aplica-funciones-ite (cdr lp) (list ((caar lp) (cdar lp)))))
 
 (define (aplica-funciones-ite lp res)
   (cond
     ((null? lp) res)
     (else (aplica-funciones-ite (cdr lp)
-                                (cons ((caar lp) (cdar lp)) res)))))
+                                (append res (list ((caar lp) (cdar lp))))))))
 
 
 ;;
-;;--------------------------------------------------------------------------------- Actividad 4
+;;-------------------------------------------------------------------------- Actividad 4
 ;; 
 
 ;;(A)
 ;binario-a-decimal "101") ; ⇒ 5
-(define (binario-a-decimal num)
-  (binario-a-decimal-ite num 0))
-
-(define (binario-a-decimal-ite num res)
-  (cond
-    ((equal? num "") res)))
-
 ;(binario-a-decimal "101101") ; ⇒ 45
 
+;aux pasa el simbolo (1 o 0) a numero
+(define (symbol-number sym)
+  (if (equal? sym #\1) 1 0))
+
+;aux pasa la lista de simbolos a numeros
+(define (simbolos-a-numeros ls)
+  (cond
+    ((null? ls) '())
+    (else (cons (symbol-number (car ls))
+                (simbolos-a-numeros (cdr ls))))))
+
+; binario-a-decimal
+(define (binario-a-decimal num)
+ (binario-a-decimal-ite (simbolos-a-numeros (string->list num)) 0))
+
+(define (binario-a-decimal-ite l res)
+  (cond
+    ((null? l) res)
+    (else (binario-a-decimal-ite
+           (cdr l)
+           (+ res (* (car l) (expt 2 (- (length l) 1))))))))
+    
 ;;(B)
 ;(decimal-a-hexadecimal 200) ; ⇒ "C8"
 ;(decimal-a-hexadecimal 999) ; ⇒ "3E7"
+
+
+
+
+;;
+;;-------------------------------------------------------------------------- Actividad 5
+;;
+
