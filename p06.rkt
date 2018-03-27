@@ -9,6 +9,8 @@
    (not (list? dato)))
 ;--------------------------------------------------------------------
 
+
+
 ;; Ejercicio 1
 ;;(A)
 (define lista-a '( (a b) d (c (e) (f g) h)))
@@ -18,11 +20,10 @@
 (define lista-b '((1) ((6) ((3)) (10)) ((2)) (8)) )
 (check-equal? (caaddr (cadr lista-b)) 10)
 
+
+
 ;; Ejercicio 2
 ;;(A)
-;(cuenta-pares '(1 (2 3) 4 (5 6))) ; ⇒ 3
-;(cuenta-pares '(((1 2) 3 (4) 5) ((((6)))))) ; ⇒ 3
-
 (define (cuenta-pares l)
   (cond
     ((null? l) 0)
@@ -31,18 +32,23 @@
              (cuenta-pares (cdr l))))
     ))
 
+(check-equal? (cuenta-pares '(1 (2 3) 4 (5 6))) 3)
+(check-equal? (cuenta-pares '(((1 2) 3 (4) 5) ((((6)))))) 3)
+
+
 ;;(B)
-; aplanar la lista -- comprobar si son even -- contar los even
 (define (cuenta-pares-fos l)
   (fold-right + 0
               (map (lambda (x) (if (hoja? x)
                                    (if (even? x) 1 0) (cuenta-pares-fos x)))
                    l)))
+(check-equal? (cuenta-pares-fos '(1 (2 3) 4 (5 6))) 3)
+(check-equal? (cuenta-pares-fos '(((1 2) 3 (4) 5) ((((6)))))) 3)
+
+
 
 ;;Ejercicio 3
 ;;(A)
-;(cumplen-predicado even? '(1 (2 (3 (4))) (5 6))) ; ⇒ {2 4 6}
-;(cumplen-predicado pair? '(((1 . 2) 3 (4 . 3) 5) 6)) ; ⇒ {{1 . 2} {4 . 3}
 (define (cumplen-predicado pred l)
   (cond
     ((null? l) '())
@@ -51,6 +57,8 @@
     (else (append (cumplen-predicado pred (car l))
                 (cumplen-predicado pred (cdr l)))
           )))
+(check-equal? (cumplen-predicado even? '(1 (2 (3 (4))) (5 6))) '(2 4 6))
+(check-equal? (cumplen-predicado pair? '(((1 . 2) 3 (4 . 3) 5) 6)) '((1 . 2) (4 . 3)))
 
 ;;(B)
 (define (cumplen-predicado-fos pred l)
@@ -61,10 +69,13 @@
                          (if (pred x) (list x) '())
                          (cumplen-predicado-fos pred x))) l)))
 
+(check-equal? (cumplen-predicado-fos even? '(1 (2 (3 (4))) (5 6))) '(2 4 6))
+(check-equal? (cumplen-predicado-fos pair? '(((1 . 2) 3 (4 . 3) 5) 6)) '((1 . 2) (4 . 3)))
+
+
+                                                                                 
 ;;Ejercicio 4
 ;;(A)
-;(sustituye-elem  '(a b (c d (e c)) c (f (c) g))  'c  'h)
-;⇒ {a b {h d {e h}} h {f {h} g}}
 (define (sustituye-elem l elem-old elem-new)
   (cond
     ((null? l) '())
@@ -73,9 +84,11 @@
     (else (cons (sustituye-elem (car l) elem-old elem-new)
                   (sustituye-elem (cdr l) elem-old elem-new)))))
 
+(check-equal? (sustituye-elem  '(a b (c d (e c)) c (f (c) g))  'c  'h) '(a b (h d (e h)) h (f (h) g)))
+
+
+
 ;;Ejercicio 5
-;(diff-listas '(a (b ((c)) d e) f) '(1 (b ((2)) 3 4) f)) ;⇒ {{a . 1} {c . 2} {d . 3} {e . 4}}
-;(diff-listas '((a b) c) '((a b) c)) ⇒ ()
 (define (diff-listas l1 l2)
   (cond
     ((null? l1) '())
@@ -84,7 +97,8 @@
     (else (append (diff-listas (car l1) (car l2))
                   (diff-listas (cdr l1) (cdr l2))))))
 
-
+(check-equal? (diff-listas '(a (b ((c)) d e) f) '(1 (b ((2)) 3 4) f)) '((a . 1) (c . 2) (d . 3) (e . 4)))
+(check-equal? (diff-listas '((a b) c) '((a b) c)) '())
 
 ;;Ejercicio6
 ;;(A)
