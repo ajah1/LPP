@@ -2,8 +2,12 @@
 (import (rnrs)
         (schemeunit))
 
+
+;--------------------------------------------------------------------
+;; barrera abstraccion
 (define (hoja? dato)
    (not (list? dato)))
+;--------------------------------------------------------------------
 
 ;; Ejercicio 1
 ;;(A)
@@ -74,6 +78,18 @@
 ;(diff-listas '((a b) c) '((a b) c)) ⇒ ()
 (define (diff-listas l1 l2)
   (cond
-    ((or (null? l1) (null? l2)) '())
-    ((and (hoja? l1) (hoja? l2)) (if (equal? l1 l2) (cons
+    ((null? l1) '())
+    ((hoja? l1) (if (and (not(number? l1)) (number? l2))
+                    (list (cons l1 l2)) '()))
+    (else (append (diff-listas (car l1) (car l2))
+                  (diff-listas (cdr l1) (cdr l2))))))
 
+
+
+;;Ejercicio6
+;;(A)
+;(cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 2) ; ⇒ 4
+;(cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 3) ; ⇒ 0
+
+(define (cuenta-hojas-debajo-nivel lista n)
+  0)
