@@ -100,10 +100,36 @@
 (check-equal? (diff-listas '(a (b ((c)) d e) f) '(1 (b ((2)) 3 4) f)) '((a . 1) (c . 2) (d . 3) (e . 4)))
 (check-equal? (diff-listas '((a b) c) '((a b) c)) '())
 
+
+
 ;;Ejercicio6
 ;;(A)
-;(cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 2) ; ⇒ 4
-;(cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 3) ; ⇒ 0
-
 (define (cuenta-hojas-debajo-nivel lista n)
-  0)
+  (cond
+    ((null? lista) 0)
+    ((hoja? lista) (if (< n 0) 1 0))
+    (else (+ (cuenta-hojas-debajo-nivel (car lista) (- n 1))
+             (cuenta-hojas-debajo-nivel (cdr lista) n)))))
+
+(check-equal? (cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 2) 4)
+(check-equal? (cuenta-hojas-debajo-nivel '(10 2 (4 6 (9 3) (8 7) 12) 1) 3) 0)
+
+;;(B)
+; AUXILIAR: devuelve la pareja con mayor nivel
+(define (max-p p1 p2)
+  (if (> (cdr p1) (cdr p2)) p1 p2))
+
+; AUXILIAR: incrementa el nivel de la pareja
+(define (suma-nivel p)
+  (cons (car p) (+ 1 (cdr p))))
+
+(define (nivel-elemento lista)
+  (cond
+    ((null? lista) (cons 0 0))
+    ((hoja? lista) (cons lista 0))
+    (else (max-p (suma-nivel (nivel-elemento (car lista)))
+                 (nivel-elemento (cdr lista))))
+    ))
+
+(check-equal? (nivel-elemento '((2) (3 (4)((((((5))) 6)) 7)) 8)) (cons 5 8))
+(check-equal? (nivel-elemento '(2 (3))) (cons 3 2))
