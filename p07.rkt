@@ -73,10 +73,24 @@
               29)
 
 ;; ACTIVIDAD 2
-;(define arbol2 '(a (b (c (d)) (e)) (f)))
+(define arbol2 '(a (b (c (d)) (e)) (f)))
 ;(to-string-arbol arbol2) ⇒ "abcdef"
 ;;(A)
+(define (to-string-arbol arbol)
+  (string-append (symbol->string (dato-arbol arbol))
+                 (to-string-bosque (hijos-arbol arbol))))
+
+(define (to-string-bosque bosque)
+  (cond
+    ((null? bosque) "")
+    (else (string-append (to-string-arbol (car bosque))
+                         (to-string-bosque (cdr bosque))))))
+
 ;;(B) fos
+(define (to-string-fos arbol)
+  (string-append (symbol->string(dato-arbol arbol))
+        (fold-right string-append ""
+                    (map to-string-fos (hijos-arbol arbol)))))
 
 ;; ACTIVIDAD 3 {fos, mutua, auxiliares}
 ;(ordenado-arbol? arbol)
