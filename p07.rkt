@@ -2,7 +2,6 @@
 (import (rnrs)
         (schemeunit))
 
-
 ;;;;;;;;;;;;ABSTRACCION ARBOLES;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define (dato-arbol arbol) 
     (car arbol))
@@ -35,6 +34,43 @@
 (define (construye-arbolb dato hijo-izq hijo-der)
     (list dato hijo-izq hijo-der))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ACTIVIDAD 1
+
+;; A.1
+(define arbol '(15 (4 (2) (3))
+                   (8 (6))
+                   (12 (9) (10) (11))))
+(check-equal?  (caar(cddar(hijos-arbol(hijos-arbol(hijos-arbol arbol)))))
+                10)
+
+;; A.2
+;1. la invocación a (hijos-datos-arbol (car bosque))
+;   de dentro de la funcion devuelve la suma
+;   de los datos del primer arbol del bosque (4 + 2 + 3 = 9)
+;
+;2. la primera llamada a recursiva a suma-datos-bosque,
+;   suma el dato de todos los arboles del bosque menos el primero
+
+;; A.3
+;1. la función map devuelve una lista aplanada de listas (cada nodo)
+;
+;
+; 2. 
+;   
+
+;; B.1
+(define arbolb (construye-arbolb 40
+                                  (construye-arbolb 23
+                                                     (construye-arbolb 5 '() '())
+                                                     (construye-arbolb 32
+                                                                       (construye-arbolb 29 '() '())
+                                                                       '()))
+                                  (construye-arbolb 45 '()
+                                                    (construye-arbolb 56 '() '()))))
+
+(check-equal? (dato-arbolb(hijo-izq-arbolb (hijo-der-arbolb (hijo-izq-arbolb arbolb))))
+              29)
 
 ;; ACTIVIDAD 2
 ;(define arbol2 '(a (b (c (d)) (e)) (f)))
