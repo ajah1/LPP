@@ -72,10 +72,11 @@
 (check-equal? (dato-arbolb(hijo-izq-arbolb (hijo-der-arbolb (hijo-izq-arbolb arbolb))))
               29)
 
+
 ;; ACTIVIDAD 2
-(define arbol2 '(a (b (c (d)) (e)) (f)))
-;(to-string-arbol arbol2) ⇒ "abcdef"
 ;;(A)
+(define arbol2 '(a (b (c (d)) (e)) (f)))
+
 (define (to-string-arbol arbol)
   (string-append (symbol->string (dato-arbol arbol))
                  (to-string-bosque (hijos-arbol arbol))))
@@ -99,6 +100,29 @@
 ;(ordenado-arbol? '(10 (8) (7))) ⇒ #f
 ;(ordenado-arbol? '(6 (5) (7))) ⇒ #f
 ;(ordenado-arbol? '(50 (10 (4) (6) (11)) (25) (15))) ⇒ #f
+
+; AUXILIAR: comprueba cosas
+(define (comprueba raiz bosque)
+  (cond
+    ((null? bosque) #t)
+    ((> raiz (caar bosque)) (comprueba raiz (cdr bosque)))
+    (else #f)))
+
+; AUXILIAR: compruebas mas cosas
+(define (comprueba-mas bosque)
+  (cond
+    ((null? (cdr bosque)) #t)
+    ((< (caar bosque) (cadr bosque))
+     (comprueba-mas (cdr bosque)))
+    (else #f)))
+     
+
+(define (ordenado-arbol? arbol)
+  (and (comprueba (dato-arbol arbol) (hijos-arbol arbol))
+       (ordenado-bosque? (hijos-arbol arbol))))
+
+(define (ordenado-bosque? bosque)
+  #t)
 
 ;; ACTIVIDAD 4
 ;; (A)
