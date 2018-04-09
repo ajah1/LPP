@@ -137,24 +137,75 @@
 (check-equal? (ordenado-arbol? '(6 (5) (7))) #f)
 (check-equal? (ordenado-arbol? '(50 (10 (4) (6) (11)) (25) (15))) #f)
 
+
 ;; ACTIVIDAD 4
+
 ;; (A)
-;(define arbol '(1 (1 (1)) (2 (3) (2)) (1 (2) (3))))
-;(veces 1 2 arbol) => {4 . 3}
-;(veces 4 3 arbol) => {0 . 2}
-;(veces 4 5 arbol) => {0 . 0}
+(define arbol4A '(1 (1 (1)) (2 (3) (2)) (1 (2) (3))))
+
+; AUXILIAR: incr 1 la izquierda de la pareja
+(define (inc-izq p)
+  (cons (+ 1 (car p))
+        (cdr p)))
+; AUXILIAR: incr 1 la derecha de la pareja
+(define (inc-der p)
+  (cons (car p)
+        (+ 1 (cdr p))))
+; AUXILIAR: suma la inz y der de dos parejas
+(define (suma-pareja p1 p2)
+  (cons (+ (car p1) (car p2))
+        (+ (cdr p1) (cdr p2))))
+
+(check-equal? (inc-izq (cons 5 6)) (cons 6 6))
+(check-equal? (inc-der (cons 0 3)) (cons 0 4))
+(check-equal? (suma-pareja (cons 1 2)
+                           (cons 2 1)) (cons 3 3))
+
+;(define (veces a b arbol)
+(define (veces a b arbol)
+  (cond
+    ((= (dato-arbol arbol) a)
+     (inc-izq (veces-bosque a b (hijos-arbol arbol))))
+    ((= (dato-arbol arbol) b)
+     (inc-der (veces-bosque a b (hijos-arbol arbol))))
+    (else (veces-bosque a b (hijos-arbol arbol)))))
+
+(define (veces-bosque a b bosque)
+  (cond
+    ((null? bosque) (cons 0 0))
+    (else (suma-pareja (veces a b (car bosque))
+                        (veces-bosque a b (cdr bosque))))))
+
+(check-equal? (veces 1 2 arbol4A) '(4 . 3))
+(check-equal? (veces 4 3 arbol4A) '(0 . 2))
+(check-equal? (veces 4 5 arbol4A) '(0 . 0))
 
 ;; (B)
 ;Suponemos que lista contiene al menos un elemento
+(define arbol4b '(a (a (a) (b)) (b (a) (c)) c))
 ;(es-camino? '(a b a) arbol) ⇒ #t
 ;(es-camino? '(a b) arbol) ⇒ #f
 ;(es-camino? '(a b a b) arbol) ⇒ #f
 
 ;; (C)
-;(nodos-nivel 0 arbol) ⇒ '(1)
-;(nodos-nivel 1 arbol) ⇒ '(2 6)
-;(nodos-nivel 2 arbol) ⇒ '(3 5 7)
-;(nodos-nivel 3 arbol) ⇒ '(4 2)
+(define arbol4c '(1 (2 (3 (4) (2)) (5)) (6 (7))))
+
+(define (nodos-nivel nivel arbol)
+  (if (= nivel 0)
+      (append (list (dato-arbol arbol))
+              (nodos-bosque nivel (hijos-arbol arbol)))
+      (nodos-bosque nivel (hijos-arbol arbol))))
+
+(define (nodos-bosque nivel bosque)
+  (cond
+    ((null? bosque) '())
+    (else (append (nodos-nivel (- nivel 1) (car bosque))
+                  (nodos-bosque nivel (cdr bosque))))))
+
+(check-equal? (nodos-nivel 0 arbol4c) '(1))
+(check-equal? (nodos-nivel 1 arbol4c) '(2 6))
+(check-equal? (nodos-nivel 2 arbol4c) '(3 5 7))
+(check-equal? (nodos-nivel 3 arbol4c) '(4 2))
 
 ;; ACTIVIDAD 5
 ;; (A)
@@ -172,6 +223,3 @@
 ;; (C)
 ;(camino-b-tree b-tree '(= < < = > =)) ⇒ '(9 3 4)
 ;(camino-b-tree b-tree '(> = < < =)) ⇒ '(15 10)
-
-
-
