@@ -126,8 +126,6 @@
 (define (ordenado-bosque? bosque)
   (cond
     ((null? bosque) #t)
-    ((or (not (comprueba (dato-arbol(car bosque)) (hijos-arbol(car bosque))))
-         (not (comprueba-mas (hijos-arbol (car bosque))))) #f)
     (else (and (ordenado-arbol? (car bosque))
                (ordenado-bosque? (cdr bosque))))))
 
@@ -174,7 +172,7 @@
   (cond
     ((null? bosque) (cons 0 0))
     (else (suma-pareja (veces a b (car bosque))
-                        (veces-bosque a b (cdr bosque))))))
+                       (veces-bosque a b (cdr bosque))))))
 
 (check-equal? (veces 1 2 arbol4A) '(4 . 3))
 (check-equal? (veces 4 3 arbol4A) '(0 . 2))
