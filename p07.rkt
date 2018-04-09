@@ -99,7 +99,7 @@
 (define (comprueba raiz bosque)
   (cond
     ((null? bosque) #t)
-    ((> raiz (caar bosque)) (comprueba raiz (cdr bosque)))
+    ((> raiz (dato-arbol(car bosque))) (comprueba raiz (cdr bosque)))
     (else #f)))
 
 (check-equal? (comprueba (dato-arbol '(10 (5) (7))) (hijos-arbol '(10 (5) (7))))  #t)
@@ -109,7 +109,7 @@
 (define (comprueba-mas bosque)
   (cond
     ((or (null? bosque) (null? (cdr bosque))) #t)
-    ((< (caar bosque) (caadr bosque))
+    ((< (dato-arbol(car bosque)) (caadr bosque))
      (comprueba-mas (cdr bosque)))
     (else #f)))
 
