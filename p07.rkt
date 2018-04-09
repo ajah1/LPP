@@ -94,35 +94,48 @@
                     (map to-string-fos (hijos-arbol arbol)))))
 
 ;; ACTIVIDAD 3 {fos, mutua, auxiliares}
-;(ordenado-arbol? arbol)
-;(ordenado-arbol? '(10 (5) (7))) ⇒ #t
-;(ordenado-arbol? '(50 (10 (4) (6) (8)) (25 (15)))) ⇒ #t
-;(ordenado-arbol? '(10 (8) (7))) ⇒ #f
-;(ordenado-arbol? '(6 (5) (7))) ⇒ #f
-;(ordenado-arbol? '(50 (10 (4) (6) (11)) (25) (15))) ⇒ #f
 
-; AUXILIAR: comprueba cosas
+; AUXILIAR: raiz mayor que el dato de sus hijos
 (define (comprueba raiz bosque)
   (cond
     ((null? bosque) #t)
     ((> raiz (caar bosque)) (comprueba raiz (cdr bosque)))
     (else #f)))
 
-; AUXILIAR: compruebas mas cosas
+(check-equal? (comprueba (dato-arbol '(10 (5) (7))) (hijos-arbol '(10 (5) (7))))  #t)
+(check-equal? (comprueba (dato-arbol '(6 (5) (7))) (hijos-arbol '(6 (5) (7)))) #f)
+
+; AUXILIAR: los datos de los hijos están ordenados
 (define (comprueba-mas bosque)
   (cond
-    ((null? (cdr bosque)) #t)
-    ((< (caar bosque) (cadr bosque))
+    ((or (null? bosque) (null? (cdr bosque))) #t)
+    ((< (caar bosque) (caadr bosque))
      (comprueba-mas (cdr bosque)))
     (else #f)))
-     
 
+(check-equal? (comprueba-mas (hijos-arbol '(50 (10 (4) (6) (11)) (25) (15)))) #f)
+(check-equal? (comprueba-mas (hijos-arbol '(10 (7) (8)))) #t)
+
+; RECURSION MUTUA
 (define (ordenado-arbol? arbol)
-  (and (comprueba (dato-arbol arbol) (hijos-arbol arbol))
+  (and (and (comprueba (dato-arbol arbol)
+                       (hijos-arbol arbol))
+            (comprueba-mas (hijos-arbol arbol)))
        (ordenado-bosque? (hijos-arbol arbol))))
 
 (define (ordenado-bosque? bosque)
-  #t)
+  (cond
+    ((null? bosque) #t)
+    ((or (not (comprueba (dato-arbol(car bosque)) (hijos-arbol(car bosque))))
+         (not (comprueba-mas (hijos-arbol (car bosque))))) #f)
+    (else (and (ordenado-arbol? (car bosque))
+               (ordenado-bosque? (cdr bosque))))))
+
+(check-equal? (ordenado-arbol? '(10 (5) (7))) #t)
+(check-equal? (ordenado-arbol? '(50 (10 (4) (6) (8)) (25 (15)))) #t)
+(check-equal? (ordenado-arbol? '(10 (8) (7))) #f)
+(check-equal? (ordenado-arbol? '(6 (5) (7))) #f)
+(check-equal? (ordenado-arbol? '(50 (10 (4) (6) (11)) (25) (15))) #f)
 
 ;; ACTIVIDAD 4
 ;; (A)
