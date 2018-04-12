@@ -149,7 +149,7 @@
 (define (inc-der p)
   (cons (car p)
         (+ 1 (cdr p))))
-; AUXILIAR: suma la inz y der de dos parejas
+; AUXILIAR: suma la izq y der de dos parejas
 (define (suma-pareja p1 p2)
   (cons (+ (car p1) (car p2))
         (+ (cdr p1) (cdr p2))))
@@ -207,17 +207,80 @@
 
 ;; ACTIVIDAD 5
 ;; (A)
-;(define arbolb '(40 (18 (3 () ()) (23 () (29 () ()))) (52 (47 () ()) ())))
-;(pertenece? 29 arbolb) ⇒ #t
-;(pertenece? 42 arbolb) ⇒ #f
+(define arbolb5 '(40 (18 (3 () ())
+                        (23 ()
+                            (29 () ())))
+                    (52 (47 () ())
+                        ())))
+
+(define (pertenece? elem arbolb)
+  (cond
+    ((vacio-arbolb? arbolb) #f)
+    ((= (dato-arbolb arbolb) elem) #t)
+    (else(or (pertenece? elem (hijo-der-arbolb arbolb))
+              (pertenece? elem (hijo-izq-arbolb arbolb))))))
+
+(check-equal? (pertenece? 29 arbolb) #t)
+(check-equal? (pertenece? 42 arbolb) #f)
 
 ;; (B)
-; AUXILIAR: 
-;(menor-arbolb arbolb)
-; AUXILIAR:
-;(mayor-arbolb arbolb)
-;(ordenado-arbolb? arbolb)
+(define arbolb5b '(6 (3 (1 () ()) (5 () ()))
+                     (8 (7 () ()) (9 () ()))))
+(define arbolb5b2 '(6 (3 (1 () ()) (5 () ()))
+                      (7 (8 () ()) (9 () ()))))
+
+; AUXILIAR: devuelve true si el arbolb es hoja
+(define (hoja-arbolb? arbolb)
+  (if(and (vacio-arbolb? (hijo-der-arbolb arbolb))
+       (vacio-arbolb? (hijo-izq-arbolb arbolb))) #t #f))
+
+(check-equal? (hoja-arbolb? '(29 () ())) #t)
+(check-equal? (hoja-arbolb? '(29 () 90)) #f)
+(check-equal? (hoja-arbolb? '(29 23 ())) #f)
+(check-equal? (hoja-arbolb? '(29 23 90)) #f)
+
+; AUXILIAR: devuelve el menor num de un arbolb
+(define (menor-arbolb arbolb)
+  (cond
+    ((hoja-arbolb? arbolb) (dato-arbolb arbolb))
+    ((vacio-arbolb? (hijo-der-arbolb arbolb)) (menor-arbolb (hijo-izq-arbolb arbolb)))
+    ((vacio-arbolb? (hijo-izq-arbolb arbolb)) (menor-arbolb (hijo-der-arbolb arbolb)))
+     (else (min (menor-arbolb (hijo-der-arbolb arbolb))
+                (menor-arbolb (hijo-izq-arbolb arbolb))))))
+
+(check-equal? (menor-arbolb '(29 () ())) 29)
+(check-equal? (menor-arbolb '(29 (23 () ()) (90 () ()))) 23)
+(check-equal? (menor-arbolb arbolb5b) 1)
+
+; AUXILIAR: devuelve el mayor num de un arbolb
+(define (mayor-arbolb arbolb)
+  (cond
+    ((hoja-arbolb? arbolb) (dato-arbolb arbolb))
+    (else (max (mayor-arbolb (hijo-izq-arbolb arbolb))
+               (mayor-arbolb (hijo-der-arbolb arbolb))))))
+
+(check-equal? (mayor-arbolb '(29 () ())) 29)
+(check-equal? (mayor-arbolb '(29 (23 () ()) (90 () ()))) 90)
+(check-equal? (mayor-arbolb arbolb5b) 9)
+
+(define (ordenado-arbolb? arbolb)
+   (cond
+     ((hoja-arbolb? arbolb) #t)
+     ((vacio-arbolb?(hijo-izq-arbolb arbolb)) (> (mayor-arbolb (hijo-der-arbolb arbolb)) (dato-arbolb arbolb)))
+     ((vacio-arbolb?(hijo-der-arbolb arbolb)) (< (mayor-arbolb (hijo-izq-arbolb arbolb)) (dato-arbolb arbolb)))
+     (else (and (> (mayor-arbolb (hijo-der-arbolb arbolb)) (dato-arbolb arbolb))
+                (< (mayor-arbolb (hijo-izq-arbolb arbolb)) (dato-arbolb arbolb))))))
+
+(check-equal? (ordenado-arbolb? '(29 () ())) #t)
+(check-equal? (ordenado-arbolb? '(29 (90 () ()) (23 () ()))) #f)
+(check-equal? (ordenado-arbolb? '(29 (23 () ()) (90 () ()))) #t)
+;(check-equal? (ordenado-arbolb? arbolb5b) #t)
+;(check-equal? (ordenado-arbolb? arbolb5b2) #f)
 
 ;; (C)
 ;(camino-b-tree b-tree '(= < < = > =)) ⇒ '(9 3 4)
 ;(camino-b-tree b-tree '(> = < < =)) ⇒ '(15 10)
+(define b-tree '(9 (5 (3 (1 () ()) (4 () ())) (7 () ()))
+                     (15 (13 (10 () ()) (14 () ())) (20 () 23))))
+
+(define (camino-b-tree b-tree camino))
