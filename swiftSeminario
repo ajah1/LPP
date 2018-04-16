@@ -1,0 +1,62 @@
+
+// DICCIONARIO Y ARRAY
+var lc = ["huevos", "agua", "tomates", "pan"]
+print (lc[0])
+lc[0] = "botella"
+print (lc[0])
+
+
+var trabajos = [
+        "tu": "capitan",
+        "el": "mecanico"
+]
+trabajos["yi"] = "yii"
+print (trabajos["tu"])
+print (trabajos["el"])
+
+let arrayVacio = [String]()
+let diccionarioVacio = [String: Float]()
+lc = []
+trabajos = [:]
+
+
+// TUPLAS
+let http404Error = (404, "not found")
+print (http404Error.0)
+print (http404Error.1)
+
+let (code, status) = http404Error
+print (http404Error)
+print ((code,status))
+
+
+// CONTROL DE FLUJO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
