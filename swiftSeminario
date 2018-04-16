@@ -29,34 +29,107 @@ let (code, status) = http404Error
 print (http404Error)
 print ((code,status))
 
+// FOR
 
-// CONTROL DE FLUJO
+let pI = [73, 43, 103, 87, 12]
 
+var pE = 0
+for p in pI
+{
+    if p > 50 
+    {
+        pE += 3
+    }
+    else 
+    {
+        pE += 1
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print (pE)
 
 
 
+// OPCIONALES
+
+var op1: String? = "hola"
+print (op1 == nil)
+
+var op2: String? = nil
+var saludo = "hello"
+if let nombre = op2
+{
+    saludo = "Hola, \(nombre)"
+}
+print (saludo)
+
+
+let nombrePila: String? = nil
+let nombreCompleto: String = "john"
+let saludo2 = "hola, \(nombrePila ?? nombreCompleto)"
+print (saludo2)
 
 
 
+// SWITCH
+let verdura = "pimiento"
+switch verdura {
+    case "zanahoria":
+        print("Buena para la vista.")
+    case "lechuga", "tomates":
+        print("Podrías hacer una buena ensalada.")
+    default:
+        print("Siempre puedes hacer una buena sopa.")
+}
 
 
+// FOR-IN CON DICCIONARIO
+
+let interesantes = [
+    "Primos": [2, 3, 5, 7, 11, 13],
+    "Fibonacci": [1, 1, 2, 3, 5, 8],
+    "Cuadrados": [1, 4, 9, 16, 25],
+]
+
+var mayor = 0
+var mayorClase = ""
+for (clase, numeros) in interesantes
+{
+    for numero in numeros
+    {
+        if numero > mayor
+        {
+            mayor = numero
+            
+            if clase != mayorClase 
+            {
+                mayorClase = clase
+            }
+        }
+    }
+}
+print (mayor)
+print (mayorClase)
 
 
+// WHILE
+var n = 2
+while n < 100 {
+    n *= 2
+}
+print (n)
 
+var m = 2
+repeat {
+    m *= 2
+} while m < 100
+print (m)
+
+
+// RANGOS EN UN BUCLE FOR
+var total = 0
+for i in 0...4-1 
+{
+    total += 1
+}
+print (total)
