@@ -133,3 +133,55 @@ for i in 0...4-1
     total += 1
 }
 print (total)
+
+
+func saluda (nombre: String, dia: String) ->String 
+{
+    return "hola  \(nombre), dia \(dia)"
+}
+print (saluda(nombre: "yi", dia: "martes"))
+
+
+func suma (numeros: Int...) -> Int
+{
+    var suma = 0
+    for num in numeros
+    {
+        suma += num
+    }
+    
+    return suma / numeros.count
+}
+
+print (suma(numeros: 42,597,12))
+
+
+
+// ANIDAR FUNCIONES
+func devuelve () -> Int 
+{
+    var y = 10
+    
+    func suma () 
+    {
+        y += 5
+    }
+    
+    suma()
+    return y
+}
+print (devuelve())
+
+
+
+// FUNCIONES COMO TIPO DE PRIMERA CLASE
+func incrementador () -> ((Int) -> Int)
+{
+    func sumaUno (numero: Int) -> Int
+    {
+        return 1 + numero
+    }
+    return sumaUno
+}
+var incrementa = incrementador()
+print (incrementa(7))
