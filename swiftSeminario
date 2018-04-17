@@ -185,3 +185,59 @@ func incrementador () -> ((Int) -> Int)
 }
 var incrementa = incrementador()
 print (incrementa(7))
+
+
+class Figura
+{
+    var _numLados = 0
+    var _nombre: String
+    
+    init (n: String)
+    {
+        _nombre = n
+    }
+    
+    deinit
+    {
+        _numLados = 0
+        _nombre = ""
+    }
+    
+    func descripcion () -> String
+    {
+        var salida: String =
+        "lados: \(_numLados) \nnombre: \(_nombre)"
+        
+        return salida
+    }
+}
+
+//var figura = Figura(l: 23, n: "yo")
+//print (figura.descripcion())
+
+
+class Cuadrado: Figura 
+{
+    var _longLado: Double
+    
+    init (lado: Double, nombre: String)
+    {
+        _longLado = lado
+        super.init (n: nombre)
+    }
+    
+    func area() -> Double
+    {
+        return _longLado * _longLado
+    }
+    
+    override
+    func descripcion () -> String
+    {
+        return "cuadrado de lado \(_longLado)"
+    }
+}
+
+let cuadrado = Cuadrado (lado: 5, nombre: "siempre")
+print (cuadrado.descripcion())
+print ("area \(cuadrado.area())")
