@@ -41,7 +41,7 @@
 (define arbol '(15 (4 (2) (3))
                    (8 (6))
                    (12 (9) (10) (11))))
-(check-equal?  (caar(cddar(hijos-arbol(hijos-arbol(hijos-arbol arbol)))))
+(check-equal?  (caar(cddar(hijos-arbol(cdr(hijos-arbol arbol)))))
                 10)
 
 ;; A.2
@@ -251,6 +251,8 @@
 (check-equal? (menor-arbolb '(29 () ())) 29)
 (check-equal? (menor-arbolb '(29 (23 () ()) (90 () ()))) 23)
 (check-equal? (menor-arbolb arbolb5b) 1)
+(check-equal? (menor-arbolb '(6 (7 (3 () ()) (5 () ()))
+                     (8 (7 () ()) (0 () ())))) 0)
 
 ; AUXILIAR: devuelve el mayor num de un arbolb
 (define (mayor-arbolb arbolb)
@@ -262,6 +264,7 @@
 (check-equal? (mayor-arbolb '(29 () ())) 29)
 (check-equal? (mayor-arbolb '(29 (23 () ()) (90 () ()))) 90)
 (check-equal? (mayor-arbolb arbolb5b) 9)
+(check-equal? (mayor-arbolb arbolb5b2) 9)
 
 (define (ordenado-arbolb? arbolb)
    (cond
@@ -274,8 +277,9 @@
 (check-equal? (ordenado-arbolb? '(29 () ())) #t)
 (check-equal? (ordenado-arbolb? '(29 (90 () ()) (23 () ()))) #f)
 (check-equal? (ordenado-arbolb? '(29 (23 () ()) (90 () ()))) #t)
-;(check-equal? (ordenado-arbolb? arbolb5b) #t)
+(check-equal? (ordenado-arbolb? arbolb5b) #t)
 ;(check-equal? (ordenado-arbolb? arbolb5b2) #f)
+(check-equal? (ordenado-arbolb? '(7 (8 () ()) (9 () ()))) #f)
 
 ;; (C)
 ;(camino-b-tree b-tree '(= < < = > =)) ⇒ '(9 3 4)
@@ -283,4 +287,4 @@
 (define b-tree '(9 (5 (3 (1 () ()) (4 () ())) (7 () ()))
                      (15 (13 (10 () ()) (14 () ())) (20 () 23))))
 
-(define (camino-b-tree b-tree camino))
+;(define (camino-b-tree b-tree camino))
