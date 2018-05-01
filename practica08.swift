@@ -1,3 +1,5 @@
+print (" ======= EJERCICIO 1 ======= \n")
+
 let respuestas = [0,0,1,1,2,1,2,3,5,1,2,2,2,6]
 print("Valores: \(respuestas)" )
 
@@ -38,7 +40,7 @@ func obtenerFrecuencias (respuestas: [Int]) -> [Int]
             frecuencias [9] += 1
         }
     }
-    
+
     return frecuencias
 }
 
@@ -72,3 +74,46 @@ func imprimir (frecuencias: [Int], maxAsteriscos: Int)
 print ("\nHistograma")
 print  ("-----------")
 imprimir (frecuencias: frec, maxAsteriscos: 10)
+
+
+
+func cuadrado (x: Int) -> Int
+{
+    return x * x
+}
+
+func compruebaParejas (array: inout [Int], funcion: (Int)->Int) -> [(Int,Int)]
+{
+    var aux_array = [0]
+
+    // caso base: array con un elemento
+    if array.count == 1
+    {
+        return []
+    }
+
+    else if array[1] == funcion (array[0])
+    {
+        aux_array = Array(array.dropFirst())
+
+        return [(array[0],array[1])]
+            + compruebaParejas (array: &aux_array, funcion: funcion)
+    }
+
+    else
+    {
+        aux_array = Array(array.dropFirst())
+
+        return compruebaParejas (array: &aux_array, funcion: funcion)
+    }
+
+    return []
+}
+
+
+
+print (" \n\n ======= EJERCICIO 2 ======= \n")
+
+var entrada = [2, 4, 16, 5, 10, 100, 105]
+print ("para el array: \(entrada)")
+print ("compruebaParejas: \(compruebaParejas(array: &entrada, funcion: cuadrado))")
