@@ -77,6 +77,9 @@ imprimir (frecuencias: frec, maxAsteriscos: 10)
 
 
 
+
+print (" \n\n ======= EJERCICIO 2 ======= \n")
+
 func cuadrado (x: Int) -> Int
 {
     return x * x
@@ -110,10 +113,36 @@ func compruebaParejas (array: inout [Int], funcion: (Int)->Int) -> [(Int,Int)]
     return []
 }
 
-
-
-print (" \n\n ======= EJERCICIO 2 ======= \n")
-
 var entrada = [2, 4, 16, 5, 10, 100, 105]
 print ("para el array: \(entrada)")
 print ("compruebaParejas: \(compruebaParejas(array: &entrada, funcion: cuadrado))")
+
+
+print ("************ EJERCICIO 3 **************")
+
+indirect enum ArbolBinario
+{
+  case nodo(Int, ArbolBinario, ArbolBinario)
+  case vacio
+}
+
+let arboliz: ArbolBinario = .nodo(2, .vacio, .vacio)
+let arbolder: ArbolBinario = .nodo(12, .vacio, .vacio)
+let arbol: ArbolBinario = .nodo(8, arboliz, arbolder)
+
+func suma (arbol: ArbolBinario) -> Int
+{
+  switch arbol
+  {
+  case .vacio:
+    return 0
+
+  case let .nodo(valor, .vacio, .vacio):
+    return valor
+
+  case let .nodo(valor, iz, de):
+    return valor + suma(arbol: iz) + suma(arbol: de)
+  }
+}
+
+print (suma (arbol: arbol))
