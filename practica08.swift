@@ -146,3 +146,20 @@ func suma (arbol: ArbolBinario) -> Int
 }
 
 print (suma (arbol: arbol))
+
+
+
+print ("************ EJERCICIO 4 **************")
+
+func aplica (x: int)
+{
+  return x * x
+}
+
+let array_ej4 = [(2,4), (4,14), (4,16), (5,25), (10,100)]
+
+
+func coinciden (parejas: [(Int),(Int)]), funcion: (Int)->(Int)) -> [Bool]
+{
+  if 
+}
