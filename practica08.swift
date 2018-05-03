@@ -115,7 +115,7 @@ func compruebaParejas (array: [Int], funcion: (Int)->Int) -> [(Int,Int)]
 }
 
 var entrada = [2, 4, 16, 5, 10, 100, 105]
-print ("para el array: \(entrada)")
+print ("Para el array: \(entrada)")
 print ("compruebaParejas: \(compruebaParejas(array: entrada, funcion: cuadrado))")
 
 
@@ -169,4 +169,55 @@ func coinciden(parejas: [(Int,Int)], funcion: (Int)->Int) -> [Bool]
   return resultados
 }
 
-print (coinciden(parejas: array_ej4, funcion: cuadrado))
+print ("Para el array: \(array_ej4)")
+print ("coinciden: \(coinciden(parejas: array_ej4, funcion: cuadrado))")
+
+
+
+print ("\n\n=========== EJERCICIO 5 ===========\n")
+
+enum Movimiento
+{
+case deposito (Double)
+case cargoRecibo (String,Double)
+case cajero (Double)
+}
+
+let movimientos: [Movimiento] = [
+  .deposito(830.0),
+  .cargoRecibo("Gimnasio", 45.0),
+  .deposito(400.0),
+  .cajero(100.0),
+  .cargoRecibo("Fnac", 38.70)]
+
+
+func aplica (movimientos:[Movimiento]) -> (Double, [String])
+{
+  var aplicados: (Double, [String]) = (0.0, [])
+
+  for movimiento in movimientos
+  {
+      switch movimiento
+      {
+      case let .deposito(valor):
+        aplicados.0 += valor
+
+      case let .cargoRecibo(lugar, valor):
+        aplicados.0 -= valor
+        aplicados.1 += [lugar]
+
+     case let .cajero(valor):
+          aplicados.0 -= valor
+      }
+  }
+
+  return aplicados
+}
+
+print ("Para el array: \(movimientos) \n")
+
+print ("aplicados \(aplica(movimientos: movimientos))")
+
+
+
+print ("\n\n=========== EJERCICIO 6 ===========\n")
