@@ -1,4 +1,4 @@
-print (" ======= EJERCICIO 1 ======= \n")
+print ("\n\n=========== EJERCICIO 1 ===========\n")
 
 let respuestas = [0,0,1,1,2,1,2,3,5,1,2,2,2,6]
 print("Valores: \(respuestas)" )
@@ -47,26 +47,28 @@ func obtenerFrecuencias (respuestas: [Int]) -> [Int]
 let frec = obtenerFrecuencias (respuestas: respuestas)
 print ("Frecuencias:  \(frec)")
 
-
+/*
 func cadenaAsteriscos (numAsteriscos: Int) -> String
 {
     var asteriscos: String = ""
-    var maximo: Int = (2 * numAsteriscos)
+    let maximo: Int = (2 * numAsteriscos)
 
-    for i in 0..<maximo
+    for _ in 0..<maximo
     {
         asteriscos += "*"
     }
 
     return asteriscos
 }
+*/
 
 func imprimir (frecuencias: [Int], maxAsteriscos: Int)
 {
     var aux: String
     for i in 0...9
     {
-        aux = cadenaAsteriscos (numAsteriscos: frecuencias[i])
+        //aux = cadenaAsteriscos (numAsteriscos: frecuencias[i])
+        aux = String(repeating: "*", count: frecuencias[i])
         print ("\(i): \(aux)")
     }
 }
@@ -78,14 +80,15 @@ imprimir (frecuencias: frec, maxAsteriscos: 10)
 
 
 
-print (" \n\n ======= EJERCICIO 2 ======= \n")
+print ("\n\n=========== EJERCICIO 2 ===========\n")
 
 func cuadrado (x: Int) -> Int
 {
     return x * x
 }
 
-func compruebaParejas (array: inout [Int], funcion: (Int)->Int) -> [(Int,Int)]
+
+func compruebaParejas (array: [Int], funcion: (Int)->Int) -> [(Int,Int)]
 {
     var aux_array = [0]
 
@@ -100,25 +103,23 @@ func compruebaParejas (array: inout [Int], funcion: (Int)->Int) -> [(Int,Int)]
         aux_array = Array(array.dropFirst())
 
         return [(array[0],array[1])]
-            + compruebaParejas (array: &aux_array, funcion: funcion)
+            + compruebaParejas (array: aux_array, funcion: funcion)
     }
 
     else
     {
         aux_array = Array(array.dropFirst())
 
-        return compruebaParejas (array: &aux_array, funcion: funcion)
+        return compruebaParejas (array: aux_array, funcion: funcion)
     }
-
-    return []
 }
 
 var entrada = [2, 4, 16, 5, 10, 100, 105]
 print ("para el array: \(entrada)")
-print ("compruebaParejas: \(compruebaParejas(array: &entrada, funcion: cuadrado))")
+print ("compruebaParejas: \(compruebaParejas(array: entrada, funcion: cuadrado))")
 
 
-print ("************ EJERCICIO 3 **************")
+print ("\n\n=========== EJERCICIO 3 ===========\n")
 
 indirect enum ArbolBinario
 {
@@ -145,21 +146,27 @@ func suma (arbol: ArbolBinario) -> Int
   }
 }
 
-print (suma (arbol: arbol))
+print ("Suma del arbol: \(suma (arbol: arbol))")
 
 
 
-print ("************ EJERCICIO 4 **************")
-
-func aplica (x: int)
-{
-  return x * x
-}
+print ("\n\n=========== EJERCICIO 4 ===========\n")
 
 let array_ej4 = [(2,4), (4,14), (4,16), (5,25), (10,100)]
 
-
-func coinciden (parejas: [(Int),(Int)]), funcion: (Int)->(Int)) -> [Bool]
+func coinciden(parejas: [(Int,Int)], funcion: (Int)->Int) -> [Bool]
 {
-  if 
+  var resultados = Array(repeating: false, count: parejas.count)
+
+  for i in 0..<parejas.count
+  {
+    if cuadrado(x: parejas[i].0) == parejas[i].1
+    {
+      resultados[i] = true
+    }
+  }
+
+  return resultados
 }
+
+print (coinciden(parejas: array_ej4, funcion: cuadrado))
