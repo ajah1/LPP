@@ -1,3 +1,7 @@
+/***************************************
+  EJERCICIO 1
+****************************************/
+
 /*
 //a.1) ==> [3,6,9] ==> 3
 let nums = [1,2,3,4,5,6,7,8,9,10]
@@ -50,7 +54,7 @@ func h(nums: [Int], n: Int) -> ([Int], [Int]) {
 }
 let b3: [Int] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 print (h (nums: b3, n: 5))
-*/
+
 
 //c.1) Función suma(palabras:contienen:):
 func suma(palabras: [String], contiene: Character) -> Int
@@ -89,33 +93,101 @@ func sumaMenoresMayores(nums: [Int], pivote: Int) -> (Int, Int)
 
 let c2: [Int] = [1, 2, 3, 4, 5]
 print (sumaMenoresMayores (nums: c2, pivote: 3))
+*/
 
-
-
+/***************************************
+  EJERCICIO 2
+****************************************/
 indirect enum Arbol<T> {
-case nodo (T, [Arbol<T>])
+      case nodo (T, [Arbol<T>])
 }
 
 let arbolInt: Arbol = .nodo(53, [.nodo(13, []),
                                  .nodo(32, []),
                                  .nodo(41, [.nodo(36, []), .nodo(39, [])])
                                ])
- let arbolString: Arbol = .nodo("Zamora", [.nodo("Buendía", [.nodo("Albeza", []), .nodo("Berenguer", []), .nodo("Bolardo", [])]),
-                                   .nodo("Galván", [])])
+ let arbolString: Arbol = .nodo("Zamora",
+  [.nodo("Buendía",
+  [.nodo("Albeza", []), .nodo("Berenguer", []),
+  .nodo("Bolardo", [])]),
+  .nodo("Galván", [])])
 
 
-func toArray (arbol: Arbol<Int>)
-{
+  /* Versión recursión mutua */
+  func toArray<T>(arbol: Arbol<T>) -> [T]
+  {
+      switch arbol
+      {
+          case let .nodo(dato, hijos):
+              return [dato] + toArray(bosque: hijos)
+      }
+  }
+
+  func toArray<T>(bosque: [Arbol<T>]) -> [T]
+  {
+      if let primero = bosque.first
+      {
+          let resto = Array(bosque.dropFirst())
+          return toArray(arbol: primero) + toArray(bosque: resto)
+      }
+      else
+      {
+          return []
+      }
+  }
+  print ("arbolString to array: \(toArray (arbol: arbolString))")
+
+
+func toArrayFos<T> (arbol: Arbol<T>) -> [T] {
+  switch arbol
+  {
+  case let .nodo (dato, hijos):
+    return hijos.map(toArrayFos).reduce([dato],+)
+  }
+}
+print ("arbolInt to array: \(toArrayFos (arbol: arbolInt))")
+
+
+
+/***************************************
+  EJERCICIO 3
+****************************************/
+let listaAlumnos = [("Pepe", 8.45, 3.75, 6.05, 1),
+                    ("Maria", 9.1, 7.5, 8.18, 1),
+                    ("Jose", 8.0, 6.65, 7.96, 1),
+                    ("Carmen", 6.25, 1.2, 5.41, 2),
+                    ("Felipe", 5.65, 0.25, 3.16, 3),
+                    ("Carla", 6.25, 1.25, 4.23, 2),
+                    ("Luis", 6.75, 0.25, 4.63, 2),
+                    ("Loli", 3.0, 1.25, 2.19, 3)]
+
+import Foundation
+
+func imprimirListadoAlumnos(_ alumnos: [(String, Double, Double, Double, Int)]) {
+    print("Alumno   Parcial1   Parcial2   Cuest  Años")
+    for alu in alumnos {
+        alu.0.withCString {
+            print(String(format:"%-10s %5.2f      %5.2f    %5.2f  %3d", $0, alu.1,alu.2,alu.3,alu.4))
+        }
+    }
 }
 
-func toArrayBosque (bosque: [Arbol<Int>])
+func imprimirListadosNotas  (alumnos: [(String, Double, Double, Double, Int)])
 {
-  if bosque.count == 0 {
-    return []
-  }
-  else {
-    var car: Bosque<Int> = bosque[0]
-    var cdr: Bosque<Int> = car.dropfirst
-    return toArray (arbol: car) + toArrayBosque (bosque: cdr)
-  }
+  print ("LISTADO ORIGINAL")
+  imprimirListadoAlumnos (alumnos)
+
+  print ("\n** DECR PARCIAL1")
+  imprimirListadoAlumnos (alumnos.sorted{$0.1 < $1.1})
+
+  print ("\n** CREC PARCIAL2")
+  imprimirListadoAlumnos (alumnos.sorted{$1.2 < $0.2})
+
+  print ("\n** DECR AÑOS Y CUEST ")
+  imprimirListadoAlumnos (alumnos.sorted{ ($0.4 < $1.4) && ($0.3 < $1.3)})
+
+  print ("\n** DECR NOTA PARCIAL3 PARA APROBAR")
+  imprimirListadoAlumnos (alumnos.sorted{ (15 - $0.1 + $0.2) > (15 - $1.1 + $1.2)})
 }
+
+imprimirListadosNotas (alumnos: listaAlumnos)
