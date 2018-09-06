@@ -3,8 +3,6 @@
         (rnrs io simple)
         (schemeunit))
 
-; Aliaga Hyder Alejandro Jesús 48765284V
-
 ;---------------------------------------------------Actividad 1
 
 ;(A)

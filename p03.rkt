@@ -3,8 +3,6 @@
         (rnrs io simple)
         (schemeunit))
 
-;; Alejandro Jesús Aliaga Hyder
-
 ;---------------------------------- Actividad 1
 
 (define (comprobar n v)

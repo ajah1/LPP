@@ -3,8 +3,6 @@
         (rnrs io simple)
         (schemeunit))
 
-;; Aliaga Hyder Alejandro Jesús
-
 ;----------------------------Actividad 1
 (define (menor x y)
   (if (< x y) x y))

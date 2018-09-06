@@ -1,9 +1,6 @@
 #lang r6rs
 (import (rnrs)
         (schemeunit))
-
-;; Alejandro Aliaga Hyder
-
 ;------------------------------------------------------------------------ Actividad 1
 ;una lista con aquellos símbolos que tienen longitud impar.
 (define (long-impar? dato resultado)
